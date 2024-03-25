@@ -1,11 +1,11 @@
 <?php
 
-namespace controller;
+namespace src\controller;
 
-use model\Annonce;
-use model\Annonceur;
+use src\model\Annonce;
+use src\model\Annonceur;
 
-class addItem
+class ControllerItem
 {
 
     function addItemView($twig, $menu, $chemin, $cat, $dpt)

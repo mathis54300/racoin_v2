@@ -1,10 +1,9 @@
 <?php
 
-namespace db;
+namespace src\db;
 
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Events\Dispatcher;
-use Illuminate\Container\Container;
 
 class connection {
 
