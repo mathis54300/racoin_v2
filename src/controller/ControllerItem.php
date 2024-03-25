@@ -58,16 +58,7 @@ class ControllerItem
         $password_confirm = trim($_POST['confirm-psw']);
 
         // Tableau d'erreurs personnalisées
-        $errors = array();
-        $errors['nameAdvertiser'] = '';
-        $errors['emailAdvertiser'] = '';
-        $errors['phoneAdvertiser'] = '';
-        $errors['villeAdvertiser'] = '';
-        $errors['departmentAdvertiser'] = '';
-        $errors['categorieAdvertiser'] = '';
-        $errors['titleAdvertiser'] = '';
-        $errors['descriptionAdvertiser'] = '';
-        $errors['priceAdvertiser'] = '';
+        $errors = $this->initTable();
         $errors['passwordAdvertiser'] = '';
 
         // On teste que les champs ne soient pas vides et soient de bons types
@@ -77,27 +68,7 @@ class ControllerItem
         if (!$this->isEmail($email)) {
             $errors['emailAdvertiser'] = 'Veuillez entrer une adresse mail correcte';
         }
-        if (empty($phone) && !is_numeric($phone)) {
-            $errors['phoneAdvertiser'] = 'Veuillez entrer votre numéro de téléphone';
-        }
-        if (empty($ville)) {
-            $errors['villeAdvertiser'] = 'Veuillez entrer votre ville';
-        }
-        if (!is_numeric($departement)) {
-            $errors['departmentAdvertiser'] = 'Veuillez choisir un département';
-        }
-        if (!is_numeric($categorie)) {
-            $errors['categorieAdvertiser'] = 'Veuillez choisir une catégorie';
-        }
-        if (empty($title)) {
-            $errors['titleAdvertiser'] = 'Veuillez entrer un titre';
-        }
-        if (empty($description)) {
-            $errors['descriptionAdvertiser'] = 'Veuillez entrer une description';
-        }
-        if (empty($price) || !is_numeric($price)) {
-            $errors['priceAdvertiser'] = 'Veuillez entrer un prix';
-        }
+        $errors = $this->test($phone, $errors, $ville, $departement, $categorie, $title, $description, $price);
         if (empty($password) || empty($password_confirm) || $password != $password_confirm) {
             $errors['passwordAdvertiser'] = 'Les mots de passes ne sont pas identiques';
         }
@@ -271,16 +242,7 @@ class ControllerItem
 
 
         // Tableau d'erreurs personnalisées
-        $errors = array();
-        $errors['nameAdvertiser'] = '';
-        $errors['emailAdvertiser'] = '';
-        $errors['phoneAdvertiser'] = '';
-        $errors['villeAdvertiser'] = '';
-        $errors['departmentAdvertiser'] = '';
-        $errors['categorieAdvertiser'] = '';
-        $errors['titleAdvertiser'] = '';
-        $errors['descriptionAdvertiser'] = '';
-        $errors['priceAdvertiser'] = '';
+        $errors = $this->initTable();
 
 
         // On teste que les champs ne soient pas vides et soient de bons types
@@ -290,27 +252,7 @@ class ControllerItem
         if (!isEmail($email)) {
             $errors['emailAdvertiser'] = 'Veuillez entrer une adresse mail correcte';
         }
-        if (empty($phone) && !is_numeric($phone)) {
-            $errors['phoneAdvertiser'] = 'Veuillez entrer votre numéro de téléphone';
-        }
-        if (empty($ville)) {
-            $errors['villeAdvertiser'] = 'Veuillez entrer votre ville';
-        }
-        if (!is_numeric($departement)) {
-            $errors['departmentAdvertiser'] = 'Veuillez choisir un département';
-        }
-        if (!is_numeric($categorie)) {
-            $errors['categorieAdvertiser'] = 'Veuillez choisir une catégorie';
-        }
-        if (empty($title)) {
-            $errors['titleAdvertiser'] = 'Veuillez entrer un titre';
-        }
-        if (empty($description)) {
-            $errors['descriptionAdvertiser'] = 'Veuillez entrer une description';
-        }
-        if (empty($price) || !is_numeric($price)) {
-            $errors['priceAdvertiser'] = 'Veuillez entrer un prix';
-        }
+        $errors = $this->test($phone, $errors, $ville, $departement, $categorie, $title, $description, $price);
 
         // On vire les cases vides
         $errors = array_values(array_filter($errors));
@@ -349,5 +291,60 @@ class ControllerItem
             $template = $twig->load("modif-confirm.html.twig");
             echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
         }
+    }
+
+    /**
+     * @param string $phone
+     * @param array $errors
+     * @param string $ville
+     * @param string $departement
+     * @param string $categorie
+     * @param string $title
+     * @param string $description
+     * @param string $price
+     * @return array
+     */
+    public function test(string $phone, array $errors, string $ville, string $departement, string $categorie, string $title, string $description, string $price): array
+    {
+        if (empty($phone) && !is_numeric($phone)) {
+            $errors['phoneAdvertiser'] = 'Veuillez entrer votre numéro de téléphone';
+        }
+        if (empty($ville)) {
+            $errors['villeAdvertiser'] = 'Veuillez entrer votre ville';
+        }
+        if (!is_numeric($departement)) {
+            $errors['departmentAdvertiser'] = 'Veuillez choisir un département';
+        }
+        if (!is_numeric($categorie)) {
+            $errors['categorieAdvertiser'] = 'Veuillez choisir une catégorie';
+        }
+        if (empty($title)) {
+            $errors['titleAdvertiser'] = 'Veuillez entrer un titre';
+        }
+        if (empty($description)) {
+            $errors['descriptionAdvertiser'] = 'Veuillez entrer une description';
+        }
+        if (empty($price) || !is_numeric($price)) {
+            $errors['priceAdvertiser'] = 'Veuillez entrer un prix';
+        }
+        return $errors;
+    }
+
+    /**
+     * @return array
+     */
+    public function initTable(): array
+    {
+        $errors = array();
+        $errors['nameAdvertiser'] = '';
+        $errors['emailAdvertiser'] = '';
+        $errors['phoneAdvertiser'] = '';
+        $errors['villeAdvertiser'] = '';
+        $errors['departmentAdvertiser'] = '';
+        $errors['categorieAdvertiser'] = '';
+        $errors['titleAdvertiser'] = '';
+        $errors['descriptionAdvertiser'] = '';
+        $errors['priceAdvertiser'] = '';
+        return $errors;
     }
 }

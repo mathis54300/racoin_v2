@@ -15,31 +15,31 @@
 
     {% for annonce in annonces %}
 
-    {% if boucle == 1 %}
+        {% if boucle == 1 %}
             <div class="row">
         {% endif %}
-            <div class="columns md-3">
-                <article class="item">
-                    <a href="{{ chemin }}item/{{ annonce.id_annonce }}">
-                        <div class="row">
-                            <p><em>Le {{ annonce.date }} par {{ annonce.nom_annonceur }}</em></p>
-                        </div>
-                        <div class="row">
-                            <div class="item-img">
-                                <img src="{{ annonce.url_photo }}" alt=""/>
+        <div class="columns md-3">
+            <article class="item">
+                <a href="{{ chemin }}item/{{ annonce.id_annonce }}">
+                    <div class="row">
+                        <p><em>Le {{ annonce.date }} par {{ annonce.nom_annonceur }}</em></p>
+                    </div>
+                    <div class="row">
+                        <div class="item-img">
+                            <img src="{{ annonce.photo[0].url_photo }}" alt=""/>
 
-                                <p class="align-center">{{ annonce.nb_photo }} photo(s)</p>
-                            </div>
-                            <div class="item-infos">
-                                <h5> {{ annonce.titre | raw }}</h5>
-                                <p><b>Lieu :</b> {{ annonce.ville | raw }}</p>
-
-                                <p><span class="price">{{ annonce.prix}} €</span></p>
-                            </div>
+                            <p class="align-center">{{ annonce.photo | length }} photo(s)</p>
                         </div>
-                    </a>
-                </article>
-            </div>
+                        <div class="item-infos">
+                            <h5> {{ annonce.titre | raw }}</h5>
+                            <p><b>Lieu :</b> {{ annonce.ville | raw }}</p>
+
+                            <p><span class="price">{{ annonce.prix }} €</span></p>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        </div>
         {% if boucle == 4 %}
             </div>
             {% set boucle = 0 %}
