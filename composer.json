@@ -5,7 +5,10 @@
         "twig/twig": "3.*",
         "illuminate/database": "11.*",
         "ext-mysqli": "*",
-        "ext-pdo": "*",
+        "ext-pdo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
     },
     "autoload":{
         "psr-0":{
