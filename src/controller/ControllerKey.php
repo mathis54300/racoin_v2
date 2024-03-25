@@ -4,28 +4,31 @@ namespace src\controller;
 
 use src\model\ApiKey;
 
-class KeyGenerator {
+class ControllerKey
+{
 
-    function show($twig, $menu, $chemin, $cat) {
+    function show($twig, $menu, $chemin, $cat): void
+    {
         $template = $twig->load("key-generator.html.twig");
         $menu = array(
             array('href' => $chemin,
                 'text' => 'Acceuil'),
-            array('href' => $chemin."/search",
+            array('href' => $chemin . "/search",
                 'text' => "Recherche")
         );
         echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
     }
 
-    function generateKey($twig, $menu, $chemin, $cat, $nom) {
+    function generateKey($twig, $menu, $chemin, $cat, $nom): void
+    {
         $nospace_nom = str_replace(' ', '', $nom);
 
-        if($nospace_nom === '') {
+        if ($nospace_nom === '') {
             $template = $twig->load("key-generator-error.html.twig");
             $menu = array(
                 array('href' => $chemin,
                     'text' => 'Acceuil'),
-                array('href' => $chemin."/search",
+                array('href' => $chemin . "/search",
                     'text' => "Recherche")
             );
 
@@ -35,7 +38,7 @@ class KeyGenerator {
             $menu = array(
                 array('href' => $chemin,
                     'text' => 'Acceuil'),
-                array('href' => $chemin."/search",
+                array('href' => $chemin . "/search",
                     'text' => "Recherche")
             );
 
@@ -54,5 +57,3 @@ class KeyGenerator {
     }
 
 }
-
-?>

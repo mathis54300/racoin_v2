@@ -8,30 +8,30 @@ use src\model\Photo;
 
 class index
 {
-    protected $annonce = array();
+    protected array $annonce = array();
 
-    public function displayAllAnnonce($twig, $menu, $chemin, $cat)
+    public function displayAllAnnonce($twig, $menu, $chemin, $cat): void
     {
         $template = $twig->load("index.html.twig");
-        $menu     = array(
+        $menu = array(
             array(
                 'href' => $chemin,
-                'text' => 'Acceuil'
+                'text' => 'Accueil'
             ),
         );
 
-        $this->getAll($chemin);
+        $this->getAll();
         echo $template->render(array(
             "breadcrumb" => $menu,
-            "chemin"     => $chemin,
+            "chemin" => $chemin,
             "categories" => $cat,
-            "annonces"   => $this->annonce
+            "annonces" => $this->annonce
         ));
     }
 
-    public function getAll($chemin)
+    public function getAll(): void
     {
-        $tmp     = Annonce::with("Annonceur")->orderBy('id_annonce', 'desc')->take(12)->get();
+        $tmp = Annonce::with("Annonceur")->orderBy('id_annonce', 'desc')->take(12)->get();
         $annonce = [];
         foreach ($tmp as $t) {
             $t->nb_photo = Photo::where("id_annonce", "=", $t->id_annonce)->count();
@@ -45,7 +45,7 @@ class index
             $t->nom_annonceur = Annonceur::select("nom_annonceur")
                 ->where("id_annonceur", "=", $t->id_annonceur)
                 ->first()->nom_annonceur;
-            array_push($annonce, $t);
+            $annonce[] = $t;
         }
         $this->annonce = $annonce;
     }
